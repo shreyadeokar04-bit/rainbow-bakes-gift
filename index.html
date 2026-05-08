@@ -1,0 +1,1965 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rainbow Bakes & Gift | Handmade Cakes & Personalized Gifts | Pimpri, Pune</title>
+    <meta name="description" content="Premium handmade cakes, customized gift hampers, chocolates & personalized gifts in Pimpri, Pune. Order via WhatsApp. 28-72 hours notice required.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'rb-cream': '#FFF8F0',
+                        'rb-blush': '#FFE4E1',
+                        'rb-sage': '#E8F5E9',
+                        'rb-sky': '#E3F2FD',
+                        'rb-lavender': '#F3E5F5',
+                        'rb-peach': '#FFF3E0',
+                        'rb-mint': '#E0F7FA',
+                        'rb-rose': '#FFEBEE',
+                        'rb-gold': '#D4A574',
+                        'rb-chocolate': '#5D4037',
+                        'rb-dark': '#3E2723',
+                        'rb-warm': '#8D6E63',
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'body': ['Poppins', 'sans-serif'],
+                        'script': ['Great Vibes', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #FFF8F0; }
+        ::-webkit-scrollbar-thumb { background: #D4A574; border-radius: 3px; }
+        html { scroll-behavior: smooth; }
+        .fade-up { opacity: 0; transform: translateY(30px); }
+        .fade-in { opacity: 0; }
+        .scale-in { opacity: 0; transform: scale(0.9); }
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(62,39,35,0.3) 0%, rgba(62,39,35,0.6) 100%);
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .rainbow-line {
+            height: 4px;
+            background: linear-gradient(90deg, #FF9AA2, #FFB7B2, #FFDAC1, #E2F0CB, #B5EAD7, #C7CEEA);
+            border-radius: 2px;
+        }
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .img-zoom {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .img-zoom:hover {
+            transform: scale(1.08);
+        }
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            50% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
+        }
+        .whatsapp-pulse {
+            animation: pulse-green 2s infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-anim { animation: float 3s ease-in-out infinite; }
+        .nav-scrolled {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .cat-pill.active {
+            background: linear-gradient(135deg, #FF9AA2, #C7CEEA);
+            color: white;
+            font-weight: 600;
+        }
+        .testimonial-card {
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFE4E1 100%);
+        }
+        .insta-item {
+            position: relative;
+            overflow: hidden;
+        }
+        .insta-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0);
+            transition: background 0.3s;
+        }
+        .insta-item:hover::after {
+            background: rgba(0,0,0,0.2);
+        }
+        .insta-item:hover .insta-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .insta-icon {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s;
+        }
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        .page-section {
+            display: none;
+            opacity: 0;
+        }
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .badge-new {
+            background: linear-gradient(135deg, #FF9AA2, #FFB7B2);
+        }
+        .badge-bestseller {
+            background: linear-gradient(135deg, #D4A574, #C9A96E);
+        }
+        .badge-festive {
+            background: linear-gradient(135deg, #E2F0CB, #B5EAD7);
+            color: #2E7D32;
+        }
+        .price-tag {
+            background: linear-gradient(135deg, #5D4037, #8D6E63);
+        }
+        .flavor-tag {
+            background: linear-gradient(135deg, #FFF3E0, #FFE4E1);
+            color: #5D4037;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        .occasion-btn {
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .occasion-btn:hover, .occasion-btn.active {
+            border-color: #D4A574;
+            background: #FFF8F0;
+        }
+        .occasion-btn.active {
+            box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+        }
+        .file-upload {
+            border: 2px dashed #D4A574;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .file-upload:hover {
+            background: #FFF8F0;
+            border-color: #8D6E63;
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #FF9AA2, #C7CEEA);
+        }
+        @media (max-width: 640px) {
+            .hero-title { font-size: 2.5rem !important; }
+            .section-title { font-size: 2rem !important; }
+        }
+        body.menu-open { overflow: hidden; }
+        .preorder-banner {
+            background: linear-gradient(90deg, #FF9AA2, #FFB7B2, #FFDAC1, #E2F0CB, #B5EAD7, #C7CEEA);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .trust-item {
+            transition: all 0.3s;
+        }
+        .trust-item:hover {
+            transform: translateY(-4px);
+        }
+        .form-input:focus {
+            border-color: #D4A574;
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
+            outline: none;
+        }
+        .hamper-check {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #D4A574;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .hamper-check:checked {
+            background: linear-gradient(135deg, #FF9AA2, #C7CEEA);
+            border-color: transparent;
+        }
+        .hamper-check:checked::after {
+            content: '✓';
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .star-filled { color: #FFD700; }
+        .star-empty { color: #E0E0E0; }
+        .custom-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%235D4037' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="font-body bg-rb-cream text-rb-chocolate antialiased">
+
+    <!-- Pre-order Notice Banner -->
+    <div id="preorder-banner" class="preorder-banner text-rb-dark text-center py-2.5 px-4 text-sm font-medium relative z-50">
+        <div class="flex items-center justify-center gap-2 flex-wrap">
+            <i data-lucide="clock" class="w-4 h-4"></i>
+            <span>28-72 hours notice for regular orders • 5-7 days for customized hampers & cakes • Limited weekend slots</span>
+            <button onclick="document.getElementById('preorder-banner').style.display='none'" class="ml-2 hover:opacity-70">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-transparent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" onclick="showPage('home')" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rb-blush to-rb-lavender flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                        <span class="font-script text-2xl text-rb-chocolate">RB</span>
+                    </div>
+                    <div class="hidden sm:block">
+                        <h1 class="font-display text-xl font-bold text-rb-dark leading-tight">Rainbow Bakes</h1>
+                        <p class="text-xs text-rb-warm font-medium">& Gift</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#" onclick="showPage('home')" class="nav-link text-sm font-medium text-rb-chocolate hover:text-rb-gold transition-colors relative group">
+                        Home
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-rb-gold transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#" onclick="showPage('menu')" class="nav-link text-sm font-medium text-rb-chocolate hover:text-rb-gold transition-colors relative group">
+                        Menu
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-rb-gold transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#" onclick="showPage('hampers')" class="nav-link text-sm font-medium text-rb-chocolate hover:text-rb-gold transition-colors relative group">
+                        Hampers
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-rb-gold transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#" onclick="showPage('preorder')" class="nav-link text-sm font-medium text-rb-chocolate hover:text-rb-gold transition-colors relative group">
+                        Pre-Order
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-rb-gold transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#" onclick="showPage('about')" class="nav-link text-sm font-medium text-rb-chocolate hover:text-rb-gold transition-colors relative group">
+                        About
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-rb-gold transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#" onclick="showPage('contact')" class="nav-link text-sm font-medium text-rb-chocolate hover:text-rb-gold transition-colors relative group">
+                        Contact
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-rb-gold transition-all group-hover:w-full"></span>
+                    </a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hidden md:block">
+                    <a href="https://wa.me/919876543210?text=Hi%20Rainbow%20Bakes%20%26%20Gift!%20I'm%20interested%20in%20ordering." 
+                       target="_blank"
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        Order on WhatsApp
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-rb-blush transition-colors">
+                    <i data-lucide="menu" class="w-6 h-6 text-rb-chocolate"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity"></div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 bottom-0 w-80 bg-white z-50 shadow-2xl overflow-y-auto">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-rb-blush to-rb-lavender flex items-center justify-center">
+                        <span class="font-script text-xl text-rb-chocolate">RB</span>
+                    </div>
+                    <div>
+                        <h2 class="font-display text-lg font-bold text-rb-dark">Rainbow Bakes</h2>
+                        <p class="text-xs text-rb-warm">& Gift</p>
+                    </div>
+                </div>
+                <button id="mobile-menu-close" class="p-2 rounded-lg hover:bg-rb-blush transition-colors">
+                    <i data-lucide="x" class="w-6 h-6 text-rb-chocolate"></i>
+                </button>
+            </div>
+
+            <div class="space-y-2">
+                <a href="#" onclick="showPage('home'); closeMobileMenu();" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-rb-cream transition-colors text-rb-chocolate font-medium">
+                    <i data-lucide="home" class="w-5 h-5 text-rb-gold"></i>
+                    Home
+                </a>
+                <a href="#" onclick="showPage('menu'); closeMobileMenu();" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-rb-cream transition-colors text-rb-chocolate font-medium">
+                    <i data-lucide="cake" class="w-5 h-5 text-rb-gold"></i>
+                    Menu & Products
+                </a>
+                <a href="#" onclick="showPage('hampers'); closeMobileMenu();" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-rb-cream transition-colors text-rb-chocolate font-medium">
+                    <i data-lucide="gift" class="w-5 h-5 text-rb-gold"></i>
+                    Customized Hampers
+                </a>
+                <a href="#" onclick="showPage('preorder'); closeMobileMenu();" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-rb-cream transition-colors text-rb-chocolate font-medium">
+                    <i data-lucide="calendar" class="w-5 h-5 text-rb-gold"></i>
+                    Pre-Order
+                </a>
+                <a href="#" onclick="showPage('about'); closeMobileMenu();" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-rb-cream transition-colors text-rb-chocolate font-medium">
+                    <i data-lucide="heart" class="w-5 h-5 text-rb-gold"></i>
+                    About Us
+                </a>
+                <a href="#" onclick="showPage('contact'); closeMobileMenu();" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-rb-cream transition-colors text-rb-chocolate font-medium">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-rb-gold"></i>
+                    Contact
+                </a>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-rb-blush">
+                <a href="https://wa.me/919876543210?text=Hi%20Rainbow%20Bakes%20%26%20Gift!" 
+                   target="_blank"
+                   class="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-5 py-3 rounded-full font-semibold shadow-lg">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                    Order on WhatsApp
+                </a>
+                <p class="text-center text-xs text-rb-warm mt-3">Pimpri, Pune, India</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HOME PAGE ==================== -->
+    <div id="page-home" class="page-section active">
+
+        <!-- Hero Section -->
+        <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-gradient-to-br from-rb-blush/30 via-rb-sage/20 to-rb-sky/30"></div>
+                <div class="absolute top-20 left-10 w-64 h-64 bg-rb-blush/40 rounded-full blur-3xl float-anim"></div>
+                <div class="absolute bottom-20 right-10 w-80 h-80 bg-rb-lavender/30 rounded-full blur-3xl float-anim" style="animation-delay: 1s;"></div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-rb-peach/20 rounded-full blur-3xl float-anim" style="animation-delay: 2s;"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+                <div class="fade-up">
+                    <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm mb-6">
+                        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span class="text-sm font-medium text-rb-warm">Now Accepting Orders for Ganesh Chaturthi</span>
+                    </div>
+                </div>
+
+                <h1 class="hero-title fade-up font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-rb-dark leading-tight mb-6">
+                    Handmade Cakes &<br>
+                    <span class="font-script text-rb-gold">Personalized Gifts</span><br>
+                    for Every Celebration
+                </h1>
+
+                <p class="fade-up text-lg sm:text-xl text-rb-warm max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Premium customized hampers, artisan cakes, handcrafted chocolates & resin keepsakes — made with love in Pimpri, Pune
+                </p>
+
+                <div class="fade-up flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#" onclick="showPage('preorder')" 
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-rb-chocolate to-rb-warm text-white px-8 py-4 rounded-full text-base font-semibold shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
+                        <i data-lucide="calendar-check" class="w-5 h-5"></i>
+                        Pre-Order Now
+                    </a>
+                    <a href="#" onclick="showPage('menu')"
+                       class="inline-flex items-center gap-2 bg-white text-rb-chocolate px-8 py-4 rounded-full text-base font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all border-2 border-rb-blush">
+                        <i data-lucide="cake" class="w-5 h-5"></i>
+                        Explore Menu
+                    </a>
+                </div>
+
+                <div class="fade-up mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
+                    <div class="trust-item bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-sm">
+                        <i data-lucide="heart-handshake" class="w-6 h-6 text-rb-gold mx-auto mb-2"></i>
+                        <p class="text-xs font-semibold text-rb-dark">100% Handmade</p>
+                    </div>
+                    <div class="trust-item bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-sm">
+                        <i data-lucide="leaf" class="w-6 h-6 text-green-500 mx-auto mb-2"></i>
+                        <p class="text-xs font-semibold text-rb-dark">Fresh Ingredients</p>
+                    </div>
+                    <div class="trust-item bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-sm">
+                        <i data-lucide="package" class="w-6 h-6 text-rb-gold mx-auto mb-2"></i>
+                        <p class="text-xs font-semibold text-rb-dark">Premium Packaging</p>
+                    </div>
+                    <div class="trust-item bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-sm">
+                        <i data-lucide="truck" class="w-6 h-6 text-rb-gold mx-auto mb-2"></i>
+                        <p class="text-xs font-semibold text-rb-dark">Pimpri Delivery</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+                <i data-lucide="chevron-down" class="w-6 h-6 text-rb-warm"></i>
+            </div>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-rb-gold font-medium text-sm tracking-widest uppercase">Our Specialties</span>
+                <h2 class="section-title font-display text-4xl sm:text-5xl font-bold text-rb-dark mt-3 mb-4">Featured Creations</h2>
+                <div class="rainbow-line w-24 mx-auto"></div>
+                <p class="text-rb-warm mt-4 max-w-xl mx-auto">Each creation is handcrafted with premium ingredients and personalized with care</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&h=400&fit=crop" 
+                             alt="Customized Gift Hamper" 
+                             class="w-full h-full object-cover img-zoom"
+                             loading="lazy">
+                        <div class="absolute top-4 left-4">
+                            <span class="badge-bestseller text-white text-xs font-bold px-3 py-1 rounded-full">Bestseller</span>
+                        </div>
+                        <div class="absolute bottom-4 right-4">
+                            <span class="price-tag text-white text-sm font-bold px-3 py-1 rounded-full">From ₹1,499</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display text-xl font-bold text-rb-dark mb-2">Customized Gift Hampers</h3>
+                        <p class="text-sm text-rb-warm mb-4">Curated hampers for birthdays, anniversaries & festivals. Personalized with messages, photos & favorite treats.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="flavor-tag">Birthday</span>
+                            <span class="flavor-tag">Anniversary</span>
+                            <span class="flavor-tag">Festive</span>
+                        </div>
+                        <button onclick="showPage('hampers')" class="w-full py-3 rounded-xl border-2 border-rb-gold text-rb-gold font-semibold hover:bg-rb-gold hover:text-white transition-all">
+                            Customize Hamper
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&h=400&fit=crop" 
+                             alt="Handmade Celebration Cake" 
+                             class="w-full h-full object-cover img-zoom"
+                             loading="lazy">
+                        <div class="absolute top-4 left-4">
+                            <span class="badge-new text-white text-xs font-bold px-3 py-1 rounded-full">Popular</span>
+                        </div>
+                        <div class="absolute bottom-4 right-4">
+                            <span class="price-tag text-white text-sm font-bold px-3 py-1 rounded-full">From ₹899</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display text-xl font-bold text-rb-dark mb-2">Celebration Cakes</h3>
+                        <p class="text-sm text-rb-warm mb-4">Customized celebration cakes with fondant, buttercream, or whipped cream. Any theme, any design.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="flavor-tag">Chocolate</span>
+                            <span class="flavor-tag">Red Velvet</span>
+                            <span class="flavor-tag">Vanilla</span>
+                        </div>
+                        <button onclick="showPage('preorder')" class="w-full py-3 rounded-xl border-2 border-rb-gold text-rb-gold font-semibold hover:bg-rb-gold hover:text-white transition-all">
+                            Order Cake
+                        </button>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-3xl overflow-hidden shadow-lg group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=600&h=400&fit=crop" 
+                             alt="Artisan Chocolates" 
+                             class="w-full h-full object-cover img-zoom"
+                             loading="lazy">
+                        <div class="absolute top-4 left-4">
+                            <span class="badge-festive text-xs font-bold px-3 py-1 rounded-full">Festive Special</span>
+                        </div>
+                        <div class="absolute bottom-4 right-4">
+                            <span class="price-tag text-white text-sm font-bold px-3 py-1 rounded-full">From ₹399</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display text-xl font-bold text-rb-dark mb-2">Artisan Chocolates</h3>
+                        <p class="text-sm text-rb-warm mb-4">Handcrafted chocolates in 7+ flavors. Perfect for gifting or indulging. Includes festive modaks.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="flavor-tag">Snickers</span>
+                            <span class="flavor-tag">Paan</span>
+                            <span class="flavor-tag">Kiwi</span>
+                        </div>
+                        <button onclick="showPage('menu')" class="w-full py-3 rounded-xl border-2 border-rb-gold text-rb-gold font-semibold hover:bg-rb-gold hover:text-white transition-all">
+                            View Flavors
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#" onclick="showPage('menu')" class="inline-flex items-center gap-2 text-rb-gold font-semibold hover:gap-3 transition-all">
+                    View Full Menu <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Seasonal Specials Banner -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-rb-chocolate to-rb-warm p-8 sm:p-12">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+
+                    <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                        <div class="text-center lg:text-left">
+                            <span class="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full mb-4">Limited Time</span>
+                            <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-4">Ganesh Chaturthi Specials</h2>
+                            <p class="text-white/80 max-w-lg">Chocolate modaks, festive sweet boxes, and curated puja hampers. Order now for September 7th celebrations!</p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#" onclick="showPage('menu')" class="bg-white text-rb-chocolate px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all text-center">
+                                View Festive Menu
+                            </a>
+                            <a href="https://wa.me/919876543210?text=Hi!%20I'm%20interested%20in%20Ganesh%20Chaturthi%20specials" 
+                               target="_blank"
+                               class="bg-green-500 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all text-center inline-flex items-center justify-center gap-2">
+                                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                Enquire Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-rb-gold font-medium text-sm tracking-widest uppercase">Simple Process</span>
+                    <h2 class="section-title font-display text-4xl sm:text-5xl font-bold text-rb-dark mt-3 mb-4">How to Order</h2>
+                    <div class="rainbow-line w-24 mx-auto"></div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-rb-blush to-rb-rose flex items-center justify-center shadow-lg">
+                            <i data-lucide="search" class="w-8 h-8 text-rb-chocolate"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-rb-dark mb-2">1. Browse</h3>
+                        <p class="text-sm text-rb-warm">Explore our menu of cakes, chocolates, hampers & gifts</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-rb-sage to-rb-mint flex items-center justify-center shadow-lg">
+                            <i data-lucide="message-square" class="w-8 h-8 text-rb-chocolate"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-rb-dark mb-2">2. Inquire</h3>
+                        <p class="text-sm text-rb-warm">Message us on WhatsApp with your requirements</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-rb-sky to-rb-lavender flex items-center justify-center shadow-lg">
+                            <i data-lucide="palette" class="w-8 h-8 text-rb-chocolate"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-rb-dark mb-2">3. Customize</h3>
+                        <p class="text-sm text-rb-warm">We design & personalize based on your preferences</p>
+                    </div>
+
+                    <div class="text-center">
+                        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-rb-peach to-rb-gold/30 flex items-center justify-center shadow-lg">
+                            <i data-lucide="party-popper" class="w-8 h-8 text-rb-chocolate"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-rb-dark mb-2">4. Celebrate</h3>
+                        <p class="text-sm text-rb-warm">Receive your order & make memories special</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-rb-gold font-medium text-sm tracking-widest uppercase">Testimonials</span>
+                    <h2 class="section-title font-display text-4xl sm:text-5xl font-bold text-rb-dark mt-3 mb-4">What Customers Say</h2>
+                    <div class="rainbow-line w-24 mx-auto"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="testimonial-card rounded-3xl p-8 shadow-lg">
+                        <div class="flex items-center gap-1 mb-4">
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                        </div>
+                        <p class="text-rb-chocolate mb-6 leading-relaxed">"The customized hamper for my sister's birthday was absolutely stunning! Every detail was perfect — from the packaging to the personalized message. She was in tears of joy!"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rb-blush to-rb-lavender flex items-center justify-center font-bold text-rb-chocolate">PS</div>
+                            <div>
+                                <p class="font-semibold text-rb-dark">Priya Sharma</p>
+                                <p class="text-xs text-rb-warm">Pimpri, Pune</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card rounded-3xl p-8 shadow-lg">
+                        <div class="flex items-center gap-1 mb-4">
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                        </div>
+                        <p class="text-rb-chocolate mb-6 leading-relaxed">"Best cheesecake I've ever had in Pune! The Snickers chocolate flavor was divine. Already placed my next order for Raksha Bandhan hampers. Highly recommended!"</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rb-sage to-rb-mint flex items-center justify-center font-bold text-rb-chocolate">AK</div>
+                            <div>
+                                <p class="font-semibold text-rb-dark">Amit Kumar</p>
+                                <p class="text-xs text-rb-warm">Wakad, Pune</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card rounded-3xl p-8 shadow-lg">
+                        <div class="flex items-center gap-1 mb-4">
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 star-filled fill-current"></i>
+                        </div>
+                        <p class="text-rb-chocolate mb-6 leading-relaxed">"Ordered Ganesh Chaturthi modaks last year and they were a hit with the entire family! The chocolate modaks were innovative and delicious. The resin keepsake was beautiful too."</p>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-rb-peach to-rb-gold/30 flex items-center justify-center font-bold text-rb-chocolate">SP</div>
+                            <div>
+                                <p class="font-semibold text-rb-dark">Sneha Patil</p>
+                                <p class="text-xs text-rb-warm">Chinchwad, Pune</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Instagram Feed Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-rb-gold font-medium text-sm tracking-widest uppercase">Follow Us</span>
+                    <h2 class="section-title font-display text-4xl sm:text-5xl font-bold text-rb-dark mt-3 mb-4">@rainbow_bake_gift</h2>
+                    <div class="rainbow-line w-24 mx-auto mb-4"></div>
+                    <p class="text-rb-warm">Daily inspiration from our kitchen to your feed</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <div class="insta-item aspect-square rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=400&fit=crop" alt="Instagram post 1" class="w-full h-full object-cover" loading="lazy">
+                        <div class="insta-icon absolute inset-0 flex items-center justify-center z-10">
+                            <div class="bg-white/90 rounded-full p-3">
+                                <i data-lucide="heart" class="w-6 h-6 text-rb-chocolate"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="insta-item aspect-square rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400&h=400&fit=crop" alt="Instagram post 2" class="w-full h-full object-cover" loading="lazy">
+                        <div class="insta-icon absolute inset-0 flex items-center justify-center z-10">
+                            <div class="bg-white/90 rounded-full p-3">
+                                <i data-lucide="heart" class="w-6 h-6 text-rb-chocolate"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="insta-item aspect-square rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=400&h=400&fit=crop" alt="Instagram post 3" class="w-full h-full object-cover" loading="lazy">
+                        <div class="insta-icon absolute inset-0 flex items-center justify-center z-10">
+                            <div class="bg-white/90 rounded-full p-3">
+                                <i data-lucide="heart" class="w-6 h-6 text-rb-chocolate"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="insta-item aspect-square rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=400&h=400&fit=crop" alt="Instagram post 4" class="w-full h-full object-cover" loading="lazy">
+                        <div class="insta-icon absolute inset-0 flex items-center justify-center z-10">
+                            <div class="bg-white/90 rounded-full p-3">
+                                <i data-lucide="heart" class="w-6 h-6 text-rb-chocolate"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="insta-item aspect-square rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1606890737304-3a2719b04e8d?w=400&h=400&fit=crop" alt="Instagram post 5" class="w-full h-full object-cover" loading="lazy">
+                        <div class="insta-icon absolute inset-0 flex items-center justify-center z-10">
+                            <div class="bg-white/90 rounded-full p-3">
+                                <i data-lucide="heart" class="w-6 h-6 text-rb-chocolate"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="insta-item aspect-square rounded-2xl overflow-hidden cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1558326567-98ae2405596b?w=400&h=400&fit=crop" alt="Instagram post 6" class="w-full h-full object-cover" loading="lazy">
+                        <div class="insta-icon absolute inset-0 flex items-center justify-center z-10">
+                            <div class="bg-white/90 rounded-full p-3">
+                                <i data-lucide="heart" class="w-6 h-6 text-rb-chocolate"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-10">
+                    <a href="https://www.instagram.com/rainbow_bake_gift/" target="_blank"
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                        Follow on Instagram
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== MENU PAGE ==================== -->
+    <div id="page-menu" class="page-section pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-rb-gold font-medium text-sm tracking-widest uppercase">Our Menu</span>
+                <h2 class="section-title font-display text-4xl sm:text-5xl font-bold text-rb-dark mt-3 mb-4">Delicious Offerings</h2>
+                <div class="rainbow-line w-24 mx-auto mb-4"></div>
+                <p class="text-rb-warm max-w-xl mx-auto">All items are handmade to order with premium ingredients. Prices are starting prices and may vary based on customization.</p>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filterMenu('all')" class="cat-pill active px-5 py-2.5 rounded-full text-sm font-medium bg-rb-cream text-rb-chocolate hover:bg-rb-blush transition-all">All</button>
+                <button onclick="filterMenu('cakes')" class="cat-pill px-5 py-2.5 rounded-full text-sm font-medium bg-rb-cream text-rb-chocolate hover:bg-rb-blush transition-all">Cakes</button>
+                <button onclick="filterMenu('cheesecakes')" class="cat-pill px-5 py-2.5 rounded-full text-sm font-medium bg-rb-cream text-rb-chocolate hover:bg-rb-blush transition-all">Cheesecakes</button>
+                <button onclick="filterMenu('chocolates')" class="cat-pill px-5 py-2.5 rounded-full text-sm font-medium bg-rb-cream text-rb-chocolate hover:bg-rb-blush transition-all">Chocolates</button>
+                <button onclick="filterMenu('hampers')" class="cat-pill px-5 py-2.5 rounded-full text-sm font-medium bg-rb-cream text-rb-chocolate hover:bg-rb-blush transition-all">Hampers</button>
+                <button onclick="filterMenu('gifts')" class="cat-pill px-5 py-2.5 rounded-full text-sm font-medium bg-rb-cream text-rb-chocolate hover:bg-rb-blush transition-all">Personalized Gifts</button>
+                <button onclick="filterMenu('festive')" class="cat-pill px-5 py-2.5 rounded-full text-sm font-medium bg-rb-cream text-rb-chocolate hover:bg-rb-blush transition-all">Festive Specials</button>
+            </div>
+
+            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cakes -->
+                <div class="menu-item cakes product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&h=400&fit=crop" alt="Customized Celebration Cake" class="w-full h-full object-cover img-zoom" loading="lazy">
+                        <div class="absolute top-3 left-3"><span class="badge-bestseller text-white text-xs font-bold px-2.5 py-1 rounded-full">Bestseller</span></div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Celebration Cakes</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹899+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Customized cakes for birthdays, anniversaries & special occasions. Fondant, buttercream & whipped cream options.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Chocolate</span>
+                            <span class="flavor-tag">Red Velvet</span>
+                            <span class="flavor-tag">Vanilla</span>
+                            <span class="flavor-tag">Black Forest</span>
+                        </div>
+                        <button onclick="openPreorder('Celebration Cake')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <div class="menu-item cakes product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&h=400&fit=crop" alt="Theme Cake" class="w-full h-full object-cover img-zoom" loading="lazy">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Theme Cakes</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹1,299+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Unicorn, superhero, floral, minimal & custom theme cakes. Photo cakes available.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Photo Print</span>
+                            <span class="flavor-tag">3D Design</span>
+                            <span class="flavor-tag">Tiered</span>
+                        </div>
+                        <button onclick="openPreorder('Theme Cake')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Cheesecakes -->
+                <div class="menu-item cheesecakes product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600&h=400&fit=crop" alt="Classic Cheesecake" class="w-full h-full object-cover img-zoom" loading="lazy">
+                        <div class="absolute top-3 left-3"><span class="badge-new text-white text-xs font-bold px-2.5 py-1 rounded-full">Popular</span></div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Classic Cheesecakes</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹749+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Creamy New York style with graham cracker crust. Baked to perfection.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Classic</span>
+                            <span class="flavor-tag">Blueberry</span>
+                            <span class="flavor-tag">Strawberry</span>
+                        </div>
+                        <button onclick="openPreorder('Classic Cheesecake')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <div class="menu-item cheesecakes product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=600&h=400&fit=crop" alt="No-Bake Cheesecake" class="w-full h-full object-cover img-zoom" loading="lazy">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">No-Bake Cheesecakes</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹649+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Light & fluffy no-bake options with Oreo, mango & chocolate bases.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Oreo</span>
+                            <span class="flavor-tag">Mango</span>
+                            <span class="flavor-tag">Chocolate</span>
+                        </div>
+                        <button onclick="openPreorder('No-Bake Cheesecake')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Chocolates -->
+                <div class="menu-item chocolates product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=600&h=400&fit=crop" alt="Artisan Chocolates" class="w-full h-full object-cover img-zoom" loading="lazy">
+                        <div class="absolute top-3 left-3"><span class="badge-bestseller text-white text-xs font-bold px-2.5 py-1 rounded-full">Bestseller</span></div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Artisan Chocolates</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹399+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Handcrafted chocolates in 7+ unique flavors. Perfect for gifting.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Snickers</span>
+                            <span class="flavor-tag">Butterscotch</span>
+                            <span class="flavor-tag">Kiwi Crush</span>
+                            <span class="flavor-tag">Paan Paradise</span>
+                            <span class="flavor-tag">Almond Crush</span>
+                        </div>
+                        <button onclick="openPreorder('Artisan Chocolates')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <div class="menu-item chocolates product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600&h=400&fit=crop" alt="Chocolate Modaks" class="w-full h-full object-cover img-zoom" loading="lazy">
+                        <div class="absolute top-3 left-3"><span class="badge-festive text-xs font-bold px-2.5 py-1 rounded-full">Festive</span></div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Chocolate Modaks</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹499+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Ganesh Chaturthi special! Chocolate modaks in various flavors.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Milk Chocolate</span>
+                            <span class="flavor-tag">Dark Chocolate</span>
+                            <span class="flavor-tag">White Chocolate</span>
+                        </div>
+                        <button onclick="openPreorder('Chocolate Modaks')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Hampers -->
+                <div class="menu-item hampers product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=400&fit=crop" alt="Birthday Hamper" class="w-full h-full object-cover img-zoom" loading="lazy">
+                        <div class="absolute top-3 left-3"><span class="badge-bestseller text-white text-xs font-bold px-2.5 py-1 rounded-full">Bestseller</span></div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Birthday Hampers</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹1,499+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Curated birthday hampers with cakes, chocolates, flowers & personalized cards.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Standard</span>
+                            <span class="flavor-tag">Premium</span>
+                            <span class="flavor-tag">Luxury</span>
+                        </div>
+                        <button onclick="openPreorder('Birthday Hamper')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <div class="menu-item hampers product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1512909006721-3d6018887383?w=600&h=400&fit=crop" alt="Anniversary Hamper" class="w-full h-full object-cover img-zoom" loading="lazy">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Anniversary Hampers</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹1,999+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Romantic anniversary hampers with keepsakes, chocolates & love notes.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Silver</span>
+                            <span class="flavor-tag">Golden</span>
+                            <span class="flavor-tag">Platinum</span>
+                        </div>
+                        <button onclick="openPreorder('Anniversary Hamper')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Personalized Gifts -->
+                <div class="menu-item gifts product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=600&h=400&fit=crop" alt="Resin Art Keepsakes" class="w-full h-full object-cover img-zoom" loading="lazy">
+                        <div class="absolute top-3 left-3"><span class="badge-new text-white text-xs font-bold px-2.5 py-1 rounded-full">New</span></div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Resin Art Keepsakes</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹599+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Handmade resin art pieces — keychains, coasters, photo frames & custom designs.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Keychains</span>
+                            <span class="flavor-tag">Coasters</span>
+                            <span class="flavor-tag">Frames</span>
+                        </div>
+                        <button onclick="openPreorder('Resin Art Keepsake')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <div class="menu-item gifts product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?w=600&h=400&fit=crop" alt="Personalized Cards" class="w-full h-full object-cover img-zoom" loading="lazy">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Personalized Cards</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹199+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Handmade greeting cards with calligraphy, pressed flowers & custom messages.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Birthday</span>
+                            <span class="flavor-tag">Anniversary</span>
+                            <span class="flavor-tag">Thank You</span>
+                        </div>
+                        <button onclick="openPreorder('Personalized Card')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <!-- Festive Specials -->
+                <div class="menu-item festive product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600&h=400&fit=crop" alt="Festive Sweet Box" class="w-full h-full object-cover img-zoom" loading="lazy">
+                        <div class="absolute top-3 left-3"><span class="badge-festive text-xs font-bold px-2.5 py-1 rounded-full">Ganesh Chaturthi</span></div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Festive Sweet Boxes</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹799+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Curated festive sweet boxes with modaks, chocolates & traditional sweets.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Modaks</span>
+                            <span class="flavor-tag">Chocolates</span>
+                            <span class="flavor-tag">Dry Fruits</span>
+                        </div>
+                        <button onclick="openPreorder('Festive Sweet Box')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <div class="menu-item festive product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=600&h=400&fit=crop" alt="Raksha Bandhan Hamper" class="w-full h-full object-cover img-zoom" loading="lazy">
+                        <div class="absolute top-3 left-3"><span class="badge-festive text-xs font-bold px-2.5 py-1 rounded-full">Rakhi Special</span></div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Raksha Bandhan Hampers</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹1,299+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Special Rakhi hampers with chocolates, sweets & personalized gifts for siblings.</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Brother</span>
+                            <span class="flavor-tag">Sister</span>
+                            <span class="flavor-tag">Both</span>
+                        </div>
+                        <button onclick="openPreorder('Raksha Bandhan Hamper')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+
+                <div class="menu-item festive product-card bg-white rounded-3xl overflow-hidden shadow-lg">
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1576717585968-8f7a50f6b244?w=600&h=400&fit=crop" alt="Christmas Special" class="w-full h-full object-cover img-zoom" loading="lazy">
+                        <div class="absolute top-3 left-3"><span class="badge-festive text-xs font-bold px-2.5 py-1 rounded-full">Christmas</span></div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-display text-lg font-bold text-rb-dark">Christmas Specials</h3>
+                            <span class="price-tag text-white text-xs font-bold px-2.5 py-1 rounded-full">₹999+</span>
+                        </div>
+                        <p class="text-sm text-rb-warm mb-3">Christmas cakes, cookies, gingerbread & festive hampers. Pre-order for December!</p>
+                        <div class="flex flex-wrap gap-1.5 mb-4">
+                            <span class="flavor-tag">Plum Cake</span>
+                            <span class="flavor-tag">Cookies</span>
+                            <span class="flavor-tag">Hampers</span>
+                        </div>
+                        <button onclick="openPreorder('Christmas Special')" class="w-full py-2.5 rounded-xl bg-rb-chocolate text-white text-sm font-semibold hover:bg-rb-warm transition-colors">Order on WhatsApp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CUSTOMIZED HAMPERS PAGE ==================== -->
+    <div id="page-hampers" class="page-section pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-rb-gold font-medium text-sm tracking-widest uppercase">Build Your Own</span>
+                <h2 class="section-title font-display text-4xl sm:text-5xl font-bold text-rb-dark mt-3 mb-4">Customized Hampers</h2>
+                <div class="rainbow-line w-24 mx-auto mb-4"></div>
+                <p class="text-rb-warm max-w-xl mx-auto">Design a personalized hamper for any occasion. Choose items, add messages & make it truly special.</p>
+            </div>
+
+            <!-- Occasion Selector -->
+            <div class="mb-12">
+                <h3 class="font-display text-xl font-bold text-rb-dark mb-4 text-center">Select Occasion</h3>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="selectOccasion('birthday')" class="occasion-btn active px-6 py-3 rounded-2xl bg-white shadow-sm text-sm font-medium text-rb-chocolate flex items-center gap-2">
+                        <i data-lucide="cake" class="w-4 h-4"></i> Birthday
+                    </button>
+                    <button onclick="selectOccasion('anniversary')" class="occasion-btn px-6 py-3 rounded-2xl bg-white shadow-sm text-sm font-medium text-rb-chocolate flex items-center gap-2">
+                        <i data-lucide="heart" class="w-4 h-4"></i> Anniversary
+                    </button>
+                    <button onclick="selectOccasion('festival')" class="occasion-btn px-6 py-3 rounded-2xl bg-white shadow-sm text-sm font-medium text-rb-chocolate flex items-center gap-2">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i> Festival
+                    </button>
+                    <button onclick="selectOccasion('corporate')" class="occasion-btn px-6 py-3 rounded-2xl bg-white shadow-sm text-sm font-medium text-rb-chocolate flex items-center gap-2">
+                        <i data-lucide="briefcase" class="w-4 h-4"></i> Corporate
+                    </button>
+                    <button onclick="selectOccasion('wedding')" class="occasion-btn px-6 py-3 rounded-2xl bg-white shadow-sm text-sm font-medium text-rb-chocolate flex items-center gap-2">
+                        <i data-lucide="rings" class="w-4 h-4"></i> Wedding
+                    </button>
+                    <button onclick="selectOccasion('baby')" class="occasion-btn px-6 py-3 rounded-2xl bg-white shadow-sm text-sm font-medium text-rb-chocolate flex items-center gap-2">
+                        <i data-lucide="baby" class="w-4 h-4"></i> Baby Shower
+                    </button>
+                    <button onclick="selectOccasion('other')" class="occasion-btn px-6 py-3 rounded-2xl bg-white shadow-sm text-sm font-medium text-rb-chocolate flex items-center gap-2">
+                        <i data-lucide="gift" class="w-4 h-4"></i> Other
+                    </button>
+                </div>
+            </div>
+
+            <!-- Hamper Builder -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left: Item Selection -->
+                <div class="lg:col-span-2 space-y-6">
+                    <!-- Cakes Section -->
+                    <div class="bg-white rounded-3xl p-6 shadow-lg">
+                        <h3 class="font-display text-lg font-bold text-rb-dark mb-4 flex items-center gap-2">
+                            <i data-lucide="cake" class="w-5 h-5 text-rb-gold"></i> Cakes & Desserts
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="899" data-name="Celebration Cake">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Celebration Cake</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹899</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="749" data-name="Cheesecake">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Cheesecake</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹749</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="399" data-name="Brownies (6 pcs)">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Brownies (6 pcs)</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹399</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="299" data-name="Cupcakes (6 pcs)">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Cupcakes (6 pcs)</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹299</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Chocolates Section -->
+                    <div class="bg-white rounded-3xl p-6 shadow-lg">
+                        <h3 class="font-display text-lg font-bold text-rb-dark mb-4 flex items-center gap-2">
+                            <i data-lucide="candy" class="w-5 h-5 text-rb-gold"></i> Chocolates & Sweets
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="399" data-name="Artisan Chocolates Box">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Artisan Chocolates Box</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹399</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="499" data-name="Chocolate Modaks">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Chocolate Modaks</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹499</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="599" data-name="Premium Chocolate Box">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Premium Chocolate Box</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹599</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="349" data-name="Dry Fruits Box">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Dry Fruits Box</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹349</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Gifts Section -->
+                    <div class="bg-white rounded-3xl p-6 shadow-lg">
+                        <h3 class="font-display text-lg font-bold text-rb-dark mb-4 flex items-center gap-2">
+                            <i data-lucide="gift" class="w-5 h-5 text-rb-gold"></i> Personalized Gifts
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="599" data-name="Resin Art Keepsake">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Resin Art Keepsake</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹599</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="199" data-name="Personalized Card">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Personalized Card</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹199</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="299" data-name="Photo Frame">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Photo Frame</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹299</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="249" data-name="Scented Candle">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Scented Candle</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹249</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Add-ons Section -->
+                    <div class="bg-white rounded-3xl p-6 shadow-lg">
+                        <h3 class="font-display text-lg font-bold text-rb-dark mb-4 flex items-center gap-2">
+                            <i data-lucide="plus-circle" class="w-5 h-5 text-rb-gold"></i> Add-ons
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="399" data-name="Fresh Flowers">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Fresh Flowers</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹399</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="199" data-name="Balloon Bouquet">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Balloon Bouquet</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹199</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="149" data-name="Ribbon & Wrap Upgrade">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Ribbon & Wrap Upgrade</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹149</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-xl hover:bg-rb-cream cursor-pointer transition-colors">
+                                <input type="checkbox" class="hamper-check" data-price="99" data-name="Gift Tag & Message">
+                                <div class="flex-1">
+                                    <p class="font-medium text-sm text-rb-dark">Gift Tag & Message</p>
+                                    <p class="text-xs text-rb-warm">Starting at ₹99</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Personal Message -->
+                    <div class="bg-white rounded-3xl p-6 shadow-lg">
+                        <h3 class="font-display text-lg font-bold text-rb-dark mb-4 flex items-center gap-2">
+                            <i data-lucide="message-square" class="w-5 h-5 text-rb-gold"></i> Personal Message
+                        </h3>
+                        <textarea id="hamper-message" class="form-input w-full px-4 py-3 rounded-xl border-2 border-rb-blush bg-rb-cream text-rb-chocolate text-sm" rows="4" placeholder="Write a heartfelt message for your loved one..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Right: Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-white rounded-3xl p-6 shadow-lg sticky top-24">
+                        <h3 class="font-display text-xl font-bold text-rb-dark mb-4">Hamper Summary</h3>
+
+                        <div id="hamper-items-list" class="space-y-2 mb-4 max-h-64 overflow-y-auto">
+                            <p class="text-sm text-rb-warm text-center py-4">Select items to build your hamper</p>
+                        </div>
+
+                        <div class="border-t border-rb-blush pt-4 mb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm text-rb-warm">Subtotal</span>
+                                <span id="hamper-subtotal" class="font-semibold text-rb-dark">₹0</span>
+                            </div>
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm text-rb-warm">Packaging</span>
+                                <span class="font-semibold text-rb-dark">₹149</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-rb-dark">Total</span>
+                                <span id="hamper-total" class="font-bold text-xl text-rb-gold">₹149</span>
+                            </div>
+                        </div>
+
+                        <button onclick="sendHamperInquiry()" class="w-full py-3 rounded-xl bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            Send Inquiry on WhatsApp
+                        </button>
+
+                        <p class="text-xs text-rb-warm text-center mt-3">5-7 days notice required for customized hampers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PRE-ORDER PAGE ==================== -->
+    <div id="page-preorder" class="page-section pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-12">
+                <span class="text-rb-gold font-medium text-sm tracking-widest uppercase">Plan Ahead</span>
+                <h2 class="section-title font-display text-4xl sm:text-5xl font-bold text-rb-dark mt-3 mb-4">Pre-Order Inquiry</h2>
+                <div class="rainbow-line w-24 mx-auto mb-4"></div>
+                <p class="text-rb-warm max-w-xl mx-auto">Fill in the details below and we'll get back to you on WhatsApp with a personalized quote.</p>
+            </div>
+
+            <!-- Notice Box -->
+            <div class="bg-gradient-to-r from-rb-blush to-rb-peach rounded-2xl p-6 mb-8 shadow-md">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0">
+                        <i data-lucide="clock" class="w-6 h-6 text-rb-gold"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-display text-lg font-bold text-rb-dark mb-2">Important Timing Information</h3>
+                        <ul class="space-y-1 text-sm text-rb-warm">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Regular orders: 28-72 hours notice</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Customized hampers & cakes: 5-7 days</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Weekend slots are limited — book early!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pre-order Form -->
+            <form id="preorder-form" class="bg-white rounded-3xl p-8 shadow-lg">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-rb-dark mb-2">Your Name *</label>
+                        <input type="text" id="preorder-name" class="form-input w-full px-4 py-3 rounded-xl border-2 border-rb-blush bg-rb-cream text-rb-chocolate" placeholder="Enter your name" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-rb-dark mb-2">WhatsApp Number *</label>
+                        <input type="tel" id="preorder-whatsapp" class="form-input w-full px-4 py-3 rounded-xl border-2 border-rb-blush bg-rb-cream text-rb-chocolate" placeholder="+91 98765 43210" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-rb-dark mb-2">Occasion *</label>
+                        <select id="preorder-occasion" class="form-input custom-select w-full px-4 py-3 rounded-xl border-2 border-rb-blush bg-rb-cream text-rb-chocolate" required>
+                            <option value="">Select occasion</option>
+                            <option value="Birthday">Birthday</option>
+                            <option value="Anniversary">Anniversary</option>
+                            <option value="Wedding">Wedding</option>
+                            <option value="Baby Shower">Baby Shower</option>
+                            <option value="Housewarming">Housewarming</option>
+                            <option value="Festival">Festival</option>
+                            <option value="Corporate">Corporate Event</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-rb-dark mb-2">Delivery Date *</label>
+                        <input type="date" id="preorder-date" class="form-input w-full px-4 py-3 rounded-xl border-2 border-rb-blush bg-rb-cream text-rb-chocolate" required>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-rb-dark mb-2">Budget Range</label>
+                        <select id="preorder-budget" class="form-input custom-select w-full px-4 py-3 rounded-xl border-2 border-rb-blush bg-rb-cream text-rb-chocolate">
+                            <option value="">Select budget</option>
+                            <option value="Under ₹500">Under ₹500</option>
+                            <option value="₹500 - ₹1,000">₹500 - ₹1,000</option>
+                            <option value="₹1,000 - ₹2,000">₹1,000 - ₹2,000</option>
+                            <option value="₹2,000 - ₹5,000">₹2,000 - ₹5,000</option>
+                            <option value="₹5,000+">₹5,000+</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-rb-dark mb-2">Product Type *</label>
+                        <select id="preorder-product" class="form-input custom-select w-full px-4 py-3 rounded-xl border-2 border-rb-blush bg-rb-cream text-rb-chocolate" required>
+                            <option value="">Select product</option>
+                            <option value="Cake">Cake</option>
+                            <option value="Cheesecake">Cheesecake</option>
+                            <option value="Chocolates">Chocolates</option>
+                            <option value="Custom Hamper">Custom Hamper</option>
+                            <option value="Resin Art">Resin Art</option>
+                            <option value="Multiple Items">Multiple Items</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-rb-dark mb-2">Special Requests / Notes</label>
+                    <textarea id="preorder-notes" class="form-input w-full px-4 py-3 rounded-xl border-2 border-rb-blush bg-rb-cream text-rb-chocolate" rows="4" placeholder="Tell us about your vision — flavors, themes, colors, dietary restrictions, etc."></textarea>
+                </div>
+
+                <div class="mb-8">
+                    <label class="block text-sm font-medium text-rb-dark mb-2">Upload Inspiration Image (Optional)</label>
+                    <div class="file-upload" onclick="document.getElementById('preorder-file').click()">
+                        <input type="file" id="preorder-file" class="hidden" accept="image/*">
+                        <i data-lucide="upload-cloud" class="w-8 h-8 text-rb-gold mx-auto mb-2"></i>
+                        <p class="text-sm text-rb-warm">Click to upload an inspiration image</p>
+                        <p class="text-xs text-rb-warm mt-1">JPG, PNG up to 5MB</p>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="send" class="w-5 h-5"></i>
+                    Send Inquiry on WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== ABOUT PAGE ==================== -->
+    <div id="page-about" class="page-section pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-rb-gold font-medium text-sm tracking-widest uppercase">Our Story</span>
+                <h2 class="section-title font-display text-4xl sm:text-5xl font-bold text-rb-dark mt-3 mb-4">About Rainbow Bakes & Gift</h2>
+                <div class="rainbow-line w-24 mx-auto"></div>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="relative rounded-3xl overflow-hidden mb-12 h-80">
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&h=600&fit=crop" alt="Baking in progress" class="w-full h-full object-cover" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-rb-dark/60 to-transparent"></div>
+                <div class="absolute bottom-8 left-8 right-8">
+                    <p class="text-white/90 text-lg italic font-display">"Every celebration deserves something handmade with love."</p>
+                </div>
+            </div>
+
+            <!-- Story Content -->
+            <div class="space-y-12">
+                <div class="bg-white rounded-3xl p-8 shadow-lg">
+                    <h3 class="font-display text-2xl font-bold text-rb-dark mb-4">Our Beginning</h3>
+                    <p class="text-rb-warm leading-relaxed mb-4">Rainbow Bakes & Gift started as a small home kitchen in Pimpri, Pune — born from a passion for baking and a desire to make every celebration memorable. What began as baking cakes for family and friends quickly grew into a beloved local brand known for handcrafted quality and personalized service.</p>
+                    <p class="text-rb-warm leading-relaxed">We believe that the best gifts come from the heart, and nothing says "I care" quite like something made by hand, just for you. Every cake, every chocolate, every hamper is crafted with attention to detail and a whole lot of love.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-3xl p-8 shadow-lg">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rb-blush to-rb-rose flex items-center justify-center mb-4">
+                            <i data-lucide="heart" class="w-7 h-7 text-rb-chocolate"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-rb-dark mb-3">Made with Love</h3>
+                        <p class="text-rb-warm leading-relaxed">Every item is handcrafted in our home kitchen using premium ingredients. No mass production — just genuine care and attention to every detail.</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-8 shadow-lg">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rb-sage to-rb-mint flex items-center justify-center mb-4">
+                            <i data-lucide="leaf" class="w-7 h-7 text-rb-chocolate"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-rb-dark mb-3">Fresh & Quality</h3>
+                        <p class="text-rb-warm leading-relaxed">We use only the freshest ingredients sourced from trusted suppliers. No preservatives, no shortcuts — just honest, delicious baking.</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-8 shadow-lg">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rb-sky to-rb-lavender flex items-center justify-center mb-4">
+                            <i data-lucide="palette" class="w-7 h-7 text-rb-chocolate"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-rb-dark mb-3">Fully Customizable</h3>
+                        <p class="text-rb-warm leading-relaxed">From flavors to packaging to personal messages — everything can be tailored to your preferences and the occasion.</p>
+                    </div>
+
+                    <div class="bg-white rounded-3xl p-8 shadow-lg">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rb-peach to-rb-gold/30 flex items-center justify-center mb-4">
+                            <i data-lucide="package" class="w-7 h-7 text-rb-chocolate"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-rb-dark mb-3">Premium Packaging</h3>
+                        <p class="text-rb-warm leading-relaxed">Beautiful, Instagram-worthy packaging that makes unboxing an experience. Eco-friendly options available on request.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline -->
+                <div class="bg-white rounded-3xl p-8 shadow-lg">
+                    <h3 class="font-display text-2xl font-bold text-rb-dark mb-8 text-center">Our Journey</h3>
+                    <div class="relative pl-12 space-y-8">
+                        <div class="timeline-line"></div>
+
+                        <div class="relative">
+                            <div class="absolute -left-12 top-0 w-8 h-8 rounded-full bg-gradient-to-br from-rb-blush to-rb-rose flex items-center justify-center">
+                                <span class="text-xs font-bold text-rb-chocolate">1</span>
+                            </div>
+                            <h4 class="font-display text-lg font-bold text-rb-dark">2020 — The Beginning</h4>
+                            <p class="text-rb-warm text-sm">Started baking cakes for family and friends from our home kitchen in Pimpri.</p>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-12 top-0 w-8 h-8 rounded-full bg-gradient-to-br from-rb-sage to-rb-mint flex items-center justify-center">
+                                <span class="text-xs font-bold text-rb-chocolate">2</span>
+                            </div>
+                            <h4 class="font-display text-lg font-bold text-rb-dark">2021 — Expanding Menu</h4>
+                            <p class="text-rb-warm text-sm">Added cheesecakes, brownies, and artisan chocolates to our offerings.</p>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-12 top-0 w-8 h-8 rounded-full bg-gradient-to-br from-rb-sky to-rb-lavender flex items-center justify-center">
+                                <span class="text-xs font-bold text-rb-chocolate">3</span>
+                            </div>
+                            <h4 class="font-display text-lg font-bold text-rb-dark">2022 — Gift Hampers Launch</h4>
+                            <p class="text-rb-warm text-sm">Introduced customized gift hampers and personalized gifting experiences.</p>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-12 top-0 w-8 h-8 rounded-full bg-gradient-to-br from-rb-peach to-rb-gold/30 flex items-center justify-center">
+                                <span class="text-xs font-bold text-rb-chocolate">4</span>
+                            </div>
+                            <h4 class="font-display text-lg font-bold text-rb-dark">2023 — Resin Art & Keepsakes</h4>
+                            <p class="text-rb-warm text-sm">Added handmade resin art pieces and keepsakes to our gift collection.</p>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-12 top-0 w-8 h-8 rounded-full bg-gradient-to-br from-rb-blush to-rb-lavender flex items-center justify-center">
+                                <span class="text-xs font-bold text-rb-chocolate">5</span>
+                            </div>
+                            <h4 class="font-display text-lg font-bold text-rb-dark">2024 — Serving Pune with Love</h4>
+                            <p class="text-rb-warm text-sm">Now serving hundreds of happy customers across Pimpri, Chinchwad & Wakad.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CONTACT PAGE ==================== -->
+    <div id="page-contact" class="page-section pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-rb-gold font-medium text-sm tracking-widest uppercase">Get in Touch</span>
+                <h2 class="section-title font-display text-4xl sm:text-5xl font-bold text-rb-dark mt-3 mb-4">Contact Us</h2>
+                <div class="rainbow-line w-24 mx-auto mb-4"></div>
+                <p class="text-rb-warm max-w-xl mx-auto">We'd love to hear from you! Reach out for orders, inquiries, or just to say hello.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <div class="bg-white rounded-3xl p-8 shadow-lg">
+                        <h3 class="font-display text-xl font-bold text-rb-dark mb-6">Contact Information</h3>
+
+                        <div class="space-y-6">
+                            <a href="https://wa.me/919876543210" target="_blank" class="flex items-center gap-4 p-4 rounded-xl bg-green-50 hover:bg-green-100 transition-colors group">
+                                <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="message-circle" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-rb-dark">WhatsApp</p>
+                                    <p class="text-sm text-rb-warm">+91 98765 43210</p>
+                                </div>
+                            </a>
+
+                            <a href="https://www.instagram.com/rainbow_bake_gift/" target="_blank" class="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50 hover:from-purple-100 hover:to-pink-100 transition-colors group">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                    <i data-lucide="instagram" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-rb-dark">Instagram</p>
+                                    <p class="text-sm text-rb-warm">@rainbow_bake_gift</p>
+                                </div>
+                            </a>
+
+                            <div class="flex items-center gap-4 p-4 rounded-xl bg-rb-cream">
+                                <div class="w-12 h-12 rounded-full bg-rb-gold flex items-center justify-center">
+                                    <i data-lucide="mail" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-rb-dark">Email</p>
+                                    <p class="text-sm text-rb-warm">rainbowbakesgift@gmail.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4 p-4 rounded-xl bg-rb-cream">
+                                <div class="w-12 h-12 rounded-full bg-rb-chocolate flex items-center justify-center">
+                                    <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-rb-dark">Location</p>
+                                    <p class="text-sm text-rb-warm">Pimpri, Pune, Maharashtra, India</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Order CTA -->
+                    <div class="bg-gradient-to-r from-rb-chocolate to-rb-warm rounded-3xl p-8 shadow-lg text-center">
+                        <h3 class="font-display text-2xl font-bold text-white mb-4">Ready to Order?</h3>
+                        <p class="text-white/80 mb-6">Skip the form and message us directly on WhatsApp for fastest response!</p>
+                        <a href="https://wa.me/919876543210?text=Hi%20Rainbow%20Bakes%20%26%20Gift!%20I'd%20like%20to%20place%20an%20order." 
+                           target="_blank"
+                           class="inline-flex items-center gap-2 bg-white text-rb-chocolate px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            Chat on WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="bg-white rounded-3xl p-6 shadow-lg">
+                    <h3 class="font-display text-xl font-bold text-rb-dark mb-4">Find Us</h3>
+                    <div class="rounded-2xl overflow-hidden h-96 bg-rb-cream">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3780.1234567890123!2d73.7890123456789!3d18.6234567890123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDM3JzI0LjQiTiA3M8KwNDcnMjAuNSJF!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                    <p class="text-sm text-rb-warm mt-4 text-center">We deliver across Pimpri, Chinchwad & nearby areas in Pune</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-rb-dark text-white pt-16 pb-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-rb-blush to-rb-lavender flex items-center justify-center">
+                            <span class="font-script text-xl text-rb-chocolate">RB</span>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-lg font-bold">Rainbow Bakes</h3>
+                            <p class="text-xs text-rb-gold">& Gift</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-white/70 leading-relaxed">Handmade cakes, customized hampers & personalized gifts for every celebration in Pimpri, Pune.</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-display font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm text-white/70">
+                        <li><a href="#" onclick="showPage('home')" class="hover:text-rb-gold transition-colors">Home</a></li>
+                        <li><a href="#" onclick="showPage('menu')" class="hover:text-rb-gold transition-colors">Menu</a></li>
+                        <li><a href="#" onclick="showPage('hampers')" class="hover:text-rb-gold transition-colors">Custom Hampers</a></li>
+                        <li><a href="#" onclick="showPage('preorder')" class="hover:text-rb-gold transition-colors">Pre-Order</a></li>
+                        <li><a href="#" onclick="showPage('about')" class="hover:text-rb-gold transition-colors">About Us</a></li>
+                        <li><a href="#" onclick="showPage('contact')" class="hover:text-rb-gold transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Products -->
+                <div>
+                    <h4 class="font-display font-bold mb-4">Our Products</h4>
+                    <ul class="space-y-2 text-sm text-white/70">
+                        <li><a href="#" onclick="showPage('menu'); filterMenu('cakes');" class="hover:text-rb-gold transition-colors">Cakes</a></li>
+                        <li><a href="#" onclick="showPage('menu'); filterMenu('cheesecakes');" class="hover:text-rb-gold transition-colors">Cheesecakes</a></li>
+                        <li><a href="#" onclick="showPage('menu'); filterMenu('chocolates');" class="hover:text-rb-gold transition-colors">Chocolates</a></li>
+                        <li><a href="#" onclick="showPage('menu'); filterMenu('hampers');" class="hover:text-rb-gold transition-colors">Gift Hampers</a></li>
+                        <li><a href="#" onclick="showPage('menu'); filterMenu('gifts');" class="hover:text-rb-gold transition-colors">Resin Art</a></li>
+                        <li><a href="#" onclick="showPage('menu'); filterMenu('festive');" class="hover:text-rb-gold transition-colors">Festive Specials</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-display font-bold mb-4">Contact</h4>
+                    <ul class="space-y-3 text-sm text-white/70">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-rb-gold"></i>
+                            Pimpri, Pune, India
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="phone" class="w-4 h-4 text-rb-gold"></i>
+                            +91 98765 43210
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="mail" class="w-4 h-4 text-rb-gold"></i>
+                            rainbowbakesgift@gmail.com
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-rb-gold"></i>
+                            Mon-Sun: 9AM - 8PM
+                        </li>
+                    </ul>
+
+                    <div class="flex gap-3 mt-6">
+                        <a href="https://www.instagram.com/rainbow_bake_gift/" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-rb-gold transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://wa.me/919876543210" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 transition-colors">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-rb-gold transition-colors">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-sm text-white/50">© 2024 Rainbow Bakes & Gift. All rights reserved.</p>
+                <p class="text-sm text-white/50">Made with <i data-lucide="heart" class="w-3 h-3 inline text-rb-gold"></i> in Pimpri, Pune</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== FLOATING WHATSAPP BUTTON ==================== -->
+    <a href="https://wa.me/919876543210?text=Hi%20Rainbow%20Bakes%20%26%20Gift!%20I'm%20interested%20in%20ordering." 
+       target="_blank"
+       class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-lg whatsapp-pulse hover:scale-110 transition-transform">
+        <i data-lucide="message-circle" class="w-7 h-7 text-white"></i>
+    </a>
+
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile Menu Functions
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('open');
+            mobileMenuOverlay.classList.remove('hidden');
+            setTimeout(() => mobileMenuOverlay.classList.add('opacity-100'), 10);
+            document.body.classList.add('menu-open');
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            mobileMenuOverlay.classList.remove('opacity-100');
+            setTimeout(() => mobileMenuOverlay.classList.add('hidden'), 300);
+            document.body.classList.remove('menu-open');
+        }
+
+        mobileMenuBtn.addEventListener('click', openMobileMenu);
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            const selectedPage = document.getElementById('page-' + pageName);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Re-initialize icons for new page
+            setTimeout(() => lucide.createIcons(), 100);
+        }
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // Menu Filter
+        function filterMenu(category) {
+            const items = document.querySelectorAll('.menu-item');
+            const pills = document.querySelectorAll('.cat-pill');
+
+            // Update active pill
+            pills.forEach(pill => {
+                pill.classList.remove('active');
+                if (pill.textContent.toLowerCase().includes(category) || 
+                    (category === 'all' && pill.textContent === 'All')) {
+                    pill.classList.add('active');
+                }
+            });
+
+            // Filter items
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, 50);
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        // Pre-order form submission
+        document.getElementById('preorder-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('preorder-name').value;
+            const whatsapp = document.getElementById('preorder-whatsapp').value;
+            const occasion = document.getElementById('preorder-occasion').value;
+            const date = document.getElementById('preorder-date').value;
+            const budget = document.getElementById('preorder-budget').value;
+            const product = document.getElementById('preorder-product').value;
+            const notes = document.getElementById('preorder-notes').value;
+
+            let message = `Hi Rainbow Bakes & Gift!%0A%0A`;
+            message += `I'd like to place a pre-order:%0A`;
+            message += `Name: ${name}%0A`;
+            message += `Occasion: ${occasion}%0A`;
+            message += `Delivery Date: ${date}%0A`;
+            message += `Product: ${product}%0A`;
+            if (budget) message += `Budget: ${budget}%0A`;
+            if (notes) message += `Notes: ${notes}%0A`;
+            message += `%0APlease confirm availability and share pricing. Thank you!`;
+
+            window.open(`https://wa.me/919876543210?text=${message}`, '_blank');
+        });
+
+        // Open Preorder with product name
+        function openPreorder(productName) {
+            showPage('preorder');
+            document.getElementById('preorder-product').value = productName;
+        }
+
+        // Hamper Builder
+        let selectedOccasion = 'birthday';
+
+        function selectOccasion(occasion) {
+            selectedOccasion = occasion;
+            document.querySelectorAll('.occasion-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.occasion-btn').classList.add('active');
+        }
+
+        function updateHamperSummary() {
+            const checkboxes = document.querySelectorAll('.hamper-check:checked');
+            const itemsList = document.getElementById('hamper-items-list');
+            const subtotalEl = document.getElementById('hamper-subtotal');
+            const totalEl = document.getElementById('hamper-total');
+
+            let subtotal = 0;
+            let itemsHTML = '';
+
+            checkboxes.forEach(checkbox => {
+                const name = checkbox.dataset.name;
+                const price = parseInt(checkbox.dataset.price);
+                subtotal += price;
+                itemsHTML += `
+                    <div class="flex justify-between items-center py-2 border-b border-rb-blush/50">
+                        <span class="text-sm text-rb-dark">${name}</span>
+                        <span class="text-sm font-medium text-rb-chocolate">₹${price}</span>
+                    </div>
+                `;
+            });
+
+            if (itemsHTML === '') {
+                itemsHTML = '<p class="text-sm text-rb-warm text-center py-4">Select items to build your hamper</p>';
+            }
+
+            itemsList.innerHTML = itemsHTML;
+            subtotalEl.textContent = `₹${subtotal}`;
+            totalEl.textContent = `₹${subtotal + 149}`;
+        }
+
+        // Add event listeners to hamper checkboxes
+        document.querySelectorAll('.hamper-check').forEach(checkbox => {
+            checkbox.addEventListener('change', updateHamperSummary);
+        });
+
+        function sendHamperInquiry() {
+            const checkboxes = document.querySelectorAll('.hamper-check:checked');
+            const message = document.getElementById('hamper-message').value;
+
+            if (checkboxes.length === 0) {
+                alert('Please select at least one item for your hamper!');
+                return;
+            }
+
+            let items = [];
+            let total = 149;
+
+            checkboxes.forEach(checkbox => {
+                items.push(checkbox.dataset.name);
+                total += parseInt(checkbox.dataset.price);
+            });
+
+            let whatsappMessage = `Hi Rainbow Bakes & Gift!%0A%0A`;
+            whatsappMessage += `I'd like to order a customized hamper for: ${selectedOccasion.toUpperCase()}%0A%0A`;
+            whatsappMessage += `Selected Items:%0A`;
+            items.forEach(item => {
+                whatsappMessage += `- ${item}%0A`;
+            });
+            whatsappMessage += `%0AEstimated Total: ₹${total}%0A`;
+            if (message) whatsappMessage += `%0APersonal Message: ${message}%0A`;
+            whatsappMessage += `%0APlease confirm and share final pricing. Thank you!`;
+
+            window.open(`https://wa.me/919876543210?text=${whatsappMessage}`, '_blank');
+        }
+
+        // GSAP Animations
+        if (typeof gsap !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Fade up animations
+            gsap.utils.toArray('.fade-up').forEach(elem => {
+                gsap.to(elem, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+
+            // Hero title animation
+            gsap.to('.hero-title', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                delay: 0.3,
+                ease: 'power3.out'
+            });
+        }
+
+        // File upload preview
+        document.getElementById('preorder-file').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const uploadDiv = document.querySelector('.file-upload');
+                uploadDiv.innerHTML = `
+                    <i data-lucide="check-circle" class="w-8 h-8 text-green-500 mx-auto mb-2"></i>
+                    <p class="text-sm text-rb-dark font-medium">${file.name}</p>
+                    <p class="text-xs text-rb-warm mt-1">Click to change file</p>
+                `;
+                lucide.createIcons();
+            }
+        });
+
+        // Set minimum date for preorder
+        const today = new Date();
+        today.setDate(today.getDate() + 3);
+        document.getElementById('preorder-date').min = today.toISOString().split('T')[0];
+    </script>
+</body>
+</html>
